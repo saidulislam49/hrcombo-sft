@@ -1,0 +1,8 @@
+.btn-group.action_dots .dropdown-toggle::after {
+    display: none !important;
+}
+.form-select:focus {
+    border-color: #212f52;
+    outline: 0;
+    box-shadow: unset !important;
+}
