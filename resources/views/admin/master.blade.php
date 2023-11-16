@@ -87,7 +87,7 @@
                     </li>
 
                     <li class="mx-sm-sidenav__list">
-                        <a href="profile.html" class="mx-sm-sidenav__link">
+                        <a href="{{ route('admin.myprofile') }}" class="mx-sm-sidenav__link">
                             <span class="mx-sm-sidenav__icon t-mr-8">
                                 <i class='bx bxs-user-account'></i>
                             </span>
@@ -490,7 +490,8 @@
                                                                         <div class="mx-search-form__icon">
                                                                             <i class='bx bx-search'></i>
                                                                         </div>
-                                                                        <input type="text" class="mx-search-form__input"
+                                                                        <input type="text"
+                                                                            class="mx-search-form__input"
                                                                             placeholder="Search...">
                                                                     </div>
                                                                 </form>
@@ -596,7 +597,7 @@
                                                                                             </li>
                                                                                             <li
                                                                                                 class="mega-menu__sub-list">
-                                                                                                <a href="profile.html"
+                                                                                                <a href="{{ route('admin.myprofile') }}"
                                                                                                     class="mega-menu__link text-capitalize">
                                                                                                     profile
                                                                                                 </a>
@@ -724,7 +725,8 @@
                                                                                     chats</span>
                                                                                 <a href="#"
                                                                                     class="t-link messages__top-link text-capitalize messages__top-text">
-                                                                                    <span class="t-mr-5 d-inline-block">
+                                                                                    <span
+                                                                                        class="t-mr-5 d-inline-block">
                                                                                         <i class="las la-cog"></i>
                                                                                     </span>
                                                                                     settings
@@ -1333,7 +1335,8 @@
                                                                         data-toggle="dropdown"
                                                                         class="t-link w-100 primary-nav-list__link primary-nav-list__link-has-menu text-capitalize">
                                                                         <div class="rtl-flag">
-                                                                            <img src="{{ asset('assets') }}/img/flag-1.png" alt="max"
+                                                                            <img src="{{ asset('assets') }}/img/flag-1.png"
+                                                                                alt="max"
                                                                                 class="img-fluid w-100" />
                                                                         </div>
                                                                     </a>
@@ -1386,12 +1389,13 @@
                                                                         class="t-link w-100 primary-nav-list__link primary-nav-list__link-has-menu text-capitalize">
                                                                         <div class="d-flex align-items-center">
                                                                             <span class="mx-user mx-user--sm">
-                                                                                <img src="{{ asset('assets') }}/img/user.jpg" alt="max"
+                                                                                <img src="{{ asset('assets') }}/img/user.jpg"
+                                                                                    alt="max"
                                                                                     class="img-fluid w-100" />
                                                                             </span>
                                                                             <span
                                                                                 class="d-none d-lg-inline-block t-ml-8">
-                                                                                admin
+                                                                                {{ auth()->user()->name ?? null }}
                                                                                 <span
                                                                                     class="t-ml-5 d-inline-block xsm-text"
                                                                                     data-feather="chevron-down"></span>
@@ -1405,7 +1409,7 @@
                                                                                     class="mx-author-menu__link text-capitalize sm-text">
                                                                                     <span
                                                                                         class="text-capitalize fw-bold d-block t-pt-5">
-                                                                                        harun agrosz
+                                                                                        {{ auth()->user()->name }}
                                                                                     </span>
                                                                                     <span
                                                                                         class="text-capitalize xsm-text d-block mt-1">
@@ -1415,7 +1419,7 @@
                                                                                 <hr class="mx-hr bg-light m-0">
                                                                             </li>
                                                                             <li class="mx-author-menu__list">
-                                                                                <a href="#"
+                                                                                <a href="{{ route('admin.myprofile') }}"
                                                                                     class="mx-author-menu__link text-capitalize">
                                                                                     <div
                                                                                         class="d-flex align-items-center">
@@ -1438,7 +1442,8 @@
                                                                                         class="d-flex align-items-center">
                                                                                         <span
                                                                                             class="xxlg-text t-mr-8 d-inline-block t-line-1">
-                                                                                            <i class='bx bx-wallet'></i>
+                                                                                            <i
+                                                                                                class='bx bx-wallet'></i>
                                                                                         </span>
                                                                                         <span
                                                                                             class="d-inline-block t-line-1 sm-text">
@@ -1481,7 +1486,7 @@
                                                                                 </a>
                                                                             </li>
                                                                             <li class="mx-author-menu__list">
-                                                                                <a href="#"
+                                                                                <a href="logout"
                                                                                     class="mx-author-menu__link text-capitalize">
                                                                                     <div
                                                                                         class="d-flex align-items-center">
@@ -1490,10 +1495,17 @@
                                                                                             <i
                                                                                                 class='bx bx-log-out-circle'></i>
                                                                                         </span>
-                                                                                        <span
-                                                                                            class="d-inline-block t-line-1 sm-text">
-                                                                                            logout
-                                                                                        </span>
+
+                                                                                        <form
+                                                                                            action="{{ route('admin.logout') }}"
+                                                                                            method="POST">
+                                                                                            @csrf
+                                                                                            <button
+                                                                                                class="btn text-white"
+                                                                                                type="submit"><span
+                                                                                                    class="d-inline-block t-line-1 sm-text">logout</span></button>
+                                                                                        </form>
+
                                                                                     </div>
                                                                                 </a>
                                                                             </li>
@@ -1539,7 +1551,7 @@
 
                                 <div class="mx-body__content" data-simplebar>
 
-                                   {{-- main content --}}
+                                    {{-- main content --}}
                                     @yield('content')
 
                                     <footer class="t-mb-30">
@@ -1550,7 +1562,8 @@
                                                         class="t-pt-15 t-pb-15 cards t-bg-white t-shadow text-center sm-text">
                                                         <span class="t-text-dark">&copy;</span> <a href="#"
                                                             class="t-link t-link--alpha text-capitalize">Adminage</a>
-                                                        <span class="t-text-dark text-capitalize">all right reserved 2020</span>
+                                                        <span class="t-text-dark text-capitalize">all right reserved
+                                                            2020</span>
                                                     </div>
                                                 </div>
                                             </div>

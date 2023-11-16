@@ -35,7 +35,8 @@
                                 @endif
                             </span>
                             <div class="avatars avatars--circle avatars--xl mx-auto">
-                                <img src="{{ $user->getFirstMediaUrl('profile_picture') }}" alt="max" class="img-fulid w-100 h-100">
+                                <img src="{{ $user->getFirstMediaUrl('profile_picture') }}" alt="max"
+                                    class="img-fulid w-100 h-100">
                                 <div class="avatars__status">
                                     <i class="las la-check"></i>
                                 </div>
@@ -65,13 +66,15 @@
                                     <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">Edit</a>
                                     <a href="#" class="btn btn-danger delete-button">Delete</a>
 
-                                    <form action="{{ route('admin.users.delete', $user->id) }}" class="delete-form" method="POST">
+                                    <form action="{{ route('admin.users.delete', $user->id) }}" class="delete-form"
+                                        method="POST">
                                         @csrf
                                         <div class="modal">
                                             <div class="modal-background"></div>
                                             <div class="modal-content">
                                                 <div class="bootstrap-content py-5">
-                                                    <h2 class="mb-5">Are you sure you want to delete this user: {{ $user->name }}</h2>
+                                                    <h2 class="mb-5">Are you sure you want to delete this user:
+                                                        {{ $user->name }}</h2>
                                                     <button type="submit" class="btn btn-primary delete-yes">Yes</button>
                                                     <a href="#" class="btn btn-danger delete-no">No</a>
                                                 </div>

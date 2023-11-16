@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+// use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -17,12 +19,12 @@ class UserController extends Controller
     {
 
 
-        if(!isset($_GET['user']) || empty($_GET['user'])){
+        if (!isset($_GET['user']) || empty($_GET['user'])) {
             $users = User::orderBy('id', 'desc')->paginate(8);
             $pagination = 1;
-        }else{
+        } else {
             $search_key = isset($_GET['user']) ? $_GET['user'] : "";
-            $users = User::where('name', 'LIKE', '%'.$search_key.'%')->orWhere('email', 'LIKE', '%' . $search_key . '%')->get();
+            $users = User::where('name', 'LIKE', '%' . $search_key . '%')->orWhere('email', 'LIKE', '%' . $search_key . '%')->get();
             $pagination = 0;
         }
         return view('admin.users.user-list', compact('users', 'pagination'));
@@ -48,7 +50,7 @@ class UserController extends Controller
     {
         $request->validate(array(
             'name' => 'required',
-            'email' => 'required | email',
+            'email' => 'required | email |unique:users,email',
             'password' => 'required | confirmed | min:8',
             'password_confirmation' => 'required',
             'profile_photo' => 'image|mimes:jpeg,png,jpg',
@@ -57,7 +59,7 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password= $request->password;
+        $user->password = $request->password;
         $photo = $request->file('profile_photo');
         if ($photo->isValid()) {
             $user->addMedia($photo)->toMediaCollection('profile_picture');
@@ -102,20 +104,23 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required | email',
-            'password' => 'required | confirmed | min:8',
-            'password_confirmation' => 'required',
             'profile_photo' => 'image|mimes:jpeg,png,jpg',
         ]);
 
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        if (!empty($request->password)) {
+            $user->password = $request->password;
+        }
 
         $photo = $request->file('profile_photo');
-        if($photo->isValid()){
+
+        if (isset($photo) && $photo->isValid()) {
             $user->addMedia($photo)->toMediaCollection('profile_picture');
         }
+
+
 
         $user->save();
 
@@ -133,5 +138,58 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return back()->with('message', "User Deleted Successfully");
+    }
+
+    /**
+     * User Logout
+     *
+     */
+    public function logout(Request $request)
+    {
+
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        // Session::flush();
+        return redirect(route('login'));
+    }
+
+    // My Profile
+    public function my_profile()
+    {
+        $user = auth()->user();
+
+        $profile_pictute = $user->getMedia('profile_pictute')->reverse()->first();
+        dd($profile_pictute);
+        return view('admin.users.my-profile', compact('user'));
+    }
+
+    // My Profile Update
+    public function my_profile_update(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required | email',
+            'profile_photo' => 'image|mimes:jpeg,png,jpg',
+        ]);
+
+        $user = auth()->user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if (!empty($request->password)) {
+            $user->password = $request->password;
+        }
+
+        $photo = $request->file('profile_photo');
+
+        if (isset($photo) && $photo->isValid()) {
+            $user->addMedia($photo)->toMediaCollection('profile_picture');
+        }
+
+
+
+        $user->save();
+
+        return back()->with('message', 'Profile Updated Successfully.');
     }
 }

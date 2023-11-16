@@ -1,7 +1,7 @@
 @extends('admin.master')
 
 @section('page-title')
-    User Update
+    My Profile
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="container-fluid px-3">
 
             <div class="row g-3">
-                <h4 class="my-3">Update User</h4>
+                <h4 class="my-3">Update Profile</h4>
                 @if (session()->has('message'))
                     <div class="alert alert-success">
                         {{ session('message') }}
@@ -22,7 +22,7 @@
                 @endif
 
                 <div class="card p-3">
-                    <form action="{{ route('admin.users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.myprofile_update', $user->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <input type="text" name="name" value="{{ $user->name }}" class="form-control mb-3" placeholder="Name">
@@ -37,16 +37,7 @@
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </form>
                 </div>
-
-
-
-
             </div>
-
-
-
-
-
         </div>
     </main>
 @endsection

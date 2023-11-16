@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 
 // Admin Routes
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     // Route for admin dashboard
     Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -40,6 +40,11 @@ Route::group(['prefix' => 'admin'], function(){
     Route::post('users/update/{id}', [UserController::class, 'update'])->name('admin.users.update');
     // Route for User delete
     Route::post('users/delete/{id}', [UserController::class, 'destroy'])->name('admin.users.delete');
+    // My Profile
+    Route::get('my-profile', [UserController::class, 'my_profile'])->name('admin.myprofile');
+    Route::post('my-profile', [UserController::class, 'my_profile_update'])->name('admin.myprofile_update');
+    // user logout
+    Route::post('logout', [UserController::class, 'logout'])->name('admin.logout');
 
     // Route for employee
     Route::resource('employee', EmployeeController::class);
@@ -53,7 +58,8 @@ Route::group(['prefix' => 'admin'], function(){
 // Route for guest who is not logged in yet
 Route::group(['middleware' => 'guest'], function(){
 
-    Route::get('login', [AuthController::class, 'login']);
+    Route::get('login', [AuthController::class, 'login'])->name('login');
+    Route::post('login', [AuthController::class, 'login_post'])->name('loginPost');
 
 });
 
