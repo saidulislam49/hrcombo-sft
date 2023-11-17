@@ -6,6 +6,7 @@ use App\Models\User;
 // use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -60,11 +61,32 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $request->password;
-        $photo = $request->file('profile_photo');
-        if ($photo->isValid()) {
-            $user->addMedia($photo)->toMediaCollection('profile_picture');
+        // $photo = $request->file('profile_photo');
+        // if ($photo->isValid()) {
+        //     $user->addMedia($photo)->toMediaCollection('profile_picture');
+        // }
+        $profile_picture = '';
+
+        if ($request->hasFile('profile_photo')) {
+            $request->validate([
+                'profile_photo' => 'image',
+            ]);
+
+            $photo = $request->file('profile_photo');
+            $path = $photo->store('profile_photo', 'public');
+
+            // Resize the image if needed
+            $image = Image::make(public_path("storage/{$path}"));
+            // Perform any image manipulation here if needed
+            $image->save();
+
+            $profile_picture = $path;
         }
+
+        $user->profile_picture = $profile_picture;
         $user->save();
+
+        return $user;
 
         return redirect()->route('admin.users.create')->with('message', 'User Created Successfully');
     }
