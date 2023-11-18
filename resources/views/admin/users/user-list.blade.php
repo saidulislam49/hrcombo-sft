@@ -35,7 +35,9 @@
                                 @endif
                             </span>
                             <div class="avatars avatars--circle avatars--xl mx-auto">
-                                <img src="{{ $user->getFirstMediaUrl('profile_picture') }}" alt="max"
+                                {{-- <img src="{{ $user->getFirstMediaUrl('profile_picture') }}" alt="max"
+                                    class="img-fulid w-100 h-100"> --}}
+                                <img src="{{ asset('storage') }}/{{ $user->profile_picture }}" alt="max"
                                     class="img-fulid w-100 h-100">
                                 <div class="avatars__status">
                                     <i class="las la-check"></i>

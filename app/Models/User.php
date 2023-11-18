@@ -56,11 +56,11 @@ class User extends Authenticatable implements HasMedia
     //     return $this->attributes['password'] = Hash::make($password);
     // }
 
-    public function password(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value,
-            set: fn ($value) => Hash::make($value)
-        );
-    }
+    // public function password(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn ($value) => $value,
+    //         set: fn ($value) => Hash::make($value)
+    //     );
+    // }
 }

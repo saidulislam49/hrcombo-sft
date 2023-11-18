@@ -28,7 +28,8 @@
                         <input type="text" name="name" value="{{ $user->name }}" class="form-control mb-3" placeholder="Name">
                         <input type="email" name="email" value="{{ $user->email }}" class="form-control mb-3" placeholder="Email">
                         <div class="">
-                            <img src="{{ $user->getFirstMediaUrl('profile_picture') }}" alt="">
+                            {{-- <img src="{{ $user->getFirstMediaUrl('profile_picture') }}" alt=""> --}}
+                            <img style="width:100px; height:100px;" src="{{ asset('storage') }}/{{ $user->profile_picture }}" alt="">
                         </div>
                         <input type="file" name="profile_photo" class="form-control mb-3" id="">
                         <input type="password" name="password" class="form-control mb-3" placeholder="Password">

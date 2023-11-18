@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -66,7 +67,6 @@ class UserController extends Controller
         //     $user->addMedia($photo)->toMediaCollection('profile_picture');
         // }
         $profile_picture = '';
-
         if ($request->hasFile('profile_photo')) {
             $request->validate([
                 'profile_photo' => 'image',
@@ -76,7 +76,7 @@ class UserController extends Controller
             $path = $photo->store('profile_photo', 'public');
 
             // Resize the image if needed
-            $image = Image::make(public_path("storage/{$path}"));
+            $image = Image::make(public_path("storage/{$path}"))->resize(200, 200);
             // Perform any image manipulation here if needed
             $image->save();
 
@@ -86,7 +86,6 @@ class UserController extends Controller
         $user->profile_picture = $profile_picture;
         $user->save();
 
-        return $user;
 
         return redirect()->route('admin.users.create')->with('message', 'User Created Successfully');
     }
@@ -136,11 +135,29 @@ class UserController extends Controller
             $user->password = $request->password;
         }
 
-        $photo = $request->file('profile_photo');
+        $profile_picture = $user->profile_picture;
+        if ($request->hasFile('profile_photo')) {
+            $request->validate([
+                'profile_photo' => 'image',
+            ]);
+            Storage::delete($user->profile_picture);
+            $photo = $request->file('profile_photo');
+            $path = $photo->store('profile_photo', 'public');
 
-        if (isset($photo) && $photo->isValid()) {
-            $user->addMedia($photo)->toMediaCollection('profile_picture');
+            // Resize the image if needed
+            $image = Image::make(public_path("storage/{$path}"))->resize(200, 200);
+            // Perform any image manipulation here if needed
+            $image->save();
+
+            $profile_picture = $path;
         }
+
+        $user->profile_picture = $profile_picture;
+
+        // $photo = $request->file('profile_photo');
+        // if (isset($photo) && $photo->isValid()) {
+        //     $user->addMedia($photo)->toMediaCollection('profile_picture');
+        // }
 
 
 
