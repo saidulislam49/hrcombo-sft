@@ -140,7 +140,7 @@ class UserController extends Controller
             $request->validate([
                 'profile_photo' => 'image',
             ]);
-            Storage::delete($user->profile_picture);
+            !is_null($user->profile_picture) && Storage::delete($user->profile_picture);
             $photo = $request->file('profile_photo');
             $path = $photo->store('profile_photo', 'public');
 
@@ -175,6 +175,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+        !is_null($user->profile_picture) && Storage::delete($user->profile_picture);
         $user->delete();
         return back()->with('message', "User Deleted Successfully");
     }
@@ -199,7 +200,6 @@ class UserController extends Controller
         $user = auth()->user();
 
         $profile_pictute = $user->getMedia('profile_pictute')->reverse()->first();
-        dd($profile_pictute);
         return view('admin.users.my-profile', compact('user'));
     }
 
@@ -219,12 +219,28 @@ class UserController extends Controller
             $user->password = $request->password;
         }
 
-        $photo = $request->file('profile_photo');
+        // $photo = $request->file('profile_photo');
+        // if (isset($photo) && $photo->isValid()) {
+        //     $user->addMedia($photo)->toMediaCollection('profile_picture');
+        // }
+        $profile_picture = $user->profile_picture;
+        if ($request->hasFile('profile_photo')) {
+            $request->validate([
+                'profile_photo' => 'image',
+            ]);
+            !is_null($user->profile_picture) && Storage::delete($user->profile_picture);
+            $photo = $request->file('profile_photo');
+            $path = $photo->store('profile_photo', 'public');
 
-        if (isset($photo) && $photo->isValid()) {
-            $user->addMedia($photo)->toMediaCollection('profile_picture');
+            // Resize the image if needed
+            $image = Image::make(public_path("storage/{$path}"))->resize(200, 200);
+            // Perform any image manipulation here if needed
+            $image->save();
+
+            $profile_picture = $path;
         }
 
+        $user->profile_picture = $profile_picture;
 
 
         $user->save();
