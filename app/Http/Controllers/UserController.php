@@ -61,7 +61,7 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
         // $photo = $request->file('profile_photo');
         // if ($photo->isValid()) {
         //     $user->addMedia($photo)->toMediaCollection('profile_picture');
@@ -132,7 +132,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         if (!empty($request->password)) {
-            $user->password = $request->password;
+            $user->password = Hash::make($request->password);
         }
 
         $profile_picture = $user->profile_picture;
@@ -216,7 +216,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         if (!empty($request->password)) {
-            $user->password = $request->password;
+            $user->password = Hash::make($request->password);
         }
 
         // $photo = $request->file('profile_photo');

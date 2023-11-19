@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
+use App\Models\Employee;
 use App\Models\User;
 
 /*
@@ -25,11 +26,10 @@ Route::get('/', function () {
 });
 
 // Admin Routes
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'can:manage_all']], function () {
 
     // Route for admin dashboard
     Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-
     // Route for User lists
     Route::get('users', [UserController::class, 'index'])->name('admin.users');
     // Route for User creation
@@ -48,24 +48,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     // Route for employee
     Route::resource('employee', EmployeeController::class);
-
-
-
 });
 
+// Employees Routes
+Route::group(['prefix' => 'employee',], function () {
+    Route::get('dashboard', function () {
+        return 'Your are an employee';
+    })->name('employee.dashboard');
+});
 
 
 // Route for guest who is not logged in yet
-Route::group(['middleware' => 'guest'], function(){
+Route::group(['middleware' => 'guest'], function () {
 
     Route::get('login', [AuthController::class, 'login'])->name('login');
     Route::post('login', [AuthController::class, 'login_post'])->name('loginPost');
-
-});
-
-
-Route::get('user', function(){
-    $user = User::find(11);
-
-    dd($user->employee->designation);
 });
