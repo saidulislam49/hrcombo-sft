@@ -1389,7 +1389,7 @@
                                                                         class="t-link w-100 primary-nav-list__link primary-nav-list__link-has-menu text-capitalize">
                                                                         <div class="d-flex align-items-center">
                                                                             <span class="mx-user mx-user--sm">
-                                                                                <img src="{{ asset('assets') }}/img/user.jpg"
+                                                                                <img src="{{ asset('storage') }}/{{ $profile_picture }}"
                                                                                     alt="max"
                                                                                     class="img-fluid w-100" />
                                                                             </span>

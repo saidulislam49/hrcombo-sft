@@ -1,6 +1,3 @@
-<?php
-echo extension_loaded('gd') ? 'GD is enabled' : 'GD is not enabled';
-?>
 @extends('admin.master')
 
 @section('page-title')
