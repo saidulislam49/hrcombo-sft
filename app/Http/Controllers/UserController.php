@@ -62,6 +62,12 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+
+        if ($request->is_admin == 'admin') {
+            $user->is_admin = true;
+        } elseif ($request->is_admin == 'employee') {
+            $user->is_admin = false;
+        }
         // $photo = $request->file('profile_photo');
         // if ($photo->isValid()) {
         //     $user->addMedia($photo)->toMediaCollection('profile_picture');

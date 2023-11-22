@@ -27,6 +27,13 @@
                         <input type="text" name="name" value="{{ old('name') }}" class="form-control mb-3" placeholder="Name">
                         <input type="email" name="email" value="{{ old('email') }}" class="form-control mb-3" placeholder="Email">
                         <input type="file" name="profile_photo" class="form-control mb-3" id="">
+                        <div class="my-3">
+                            <label for="is_admin">User Role</label>
+                            <select name="is_admin" class="form-control" id="is_admin">
+                            <option value="admin">Admin</option>
+                            <option value="employee" selected='selected'>Employee</option>
+                        </select>
+                        </div>
                         <input type="password" name="password" class="form-control mb-3" placeholder="Password">
                         <input type="password" name="password_confirmation" class="form-control mb-3"
                             placeholder="Confirm Password">
