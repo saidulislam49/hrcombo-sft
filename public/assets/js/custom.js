@@ -12,5 +12,6 @@
         $(".delete-no").on('click', function () {
             $(this).parents('.modal').removeClass('is-active');
         });
+
     });
 })(jQuery);

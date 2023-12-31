@@ -81,7 +81,6 @@ class UserController extends Controller
 
             $photo = $request->file('profile_photo');
             $path = $photo->store('profile_photo', 'public');
-
             // Resize the image if needed
             $image = Image::make(public_path("storage/{$path}"))->resize(200, 200);
             // Perform any image manipulation here if needed

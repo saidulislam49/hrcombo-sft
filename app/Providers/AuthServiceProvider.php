@@ -44,8 +44,7 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
             } elseif (Employee::where('user_id', $user->id)->exists()) {
 
-                if (1 >= count(Employee::where('user_id', $user->id)->get())
-                ) {
+                if (1 >= count(Employee::where('user_id', $user->id)->get())) {
                     abort(redirect()->route('employee.dashboard'));
                 } else {
                     abort(redirect(route('admin.dashboard')));
@@ -54,7 +53,5 @@ class AuthServiceProvider extends ServiceProvider
                 return abort(redirect()->route('home_frontend'));
             }
         });
-
-
     }
 }
