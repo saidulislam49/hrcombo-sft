@@ -1,7 +1,7 @@
 @extends('admin.master')
 
 @section('page-title')
-    User Create
+    User Update
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="container-fluid px-3">
 
             <div class="row g-3">
-                <h4>Create User</h4>
+                <h4 class="my-3">Update User</h4>
                 @if (session()->has('message'))
                     <div class="alert alert-success">
                         {{ session('message') }}
@@ -22,24 +22,23 @@
                 @endif
 
                 <div class="card p-3">
-                    <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="name" value="{{ old('name') }}" class="form-control mb-3" placeholder="Name">
-                        <input type="email" name="email" value="{{ old('email') }}" class="form-control mb-3" placeholder="Email">
-                        <input type="file" name="profile_photo" class="form-control mb-3" id="">
-                        <div class="my-3">
-                            <label for="is_admin">User Role</label>
-                            <select name="is_admin" class="form-control" id="is_admin">
-                            <option value="admin">Admin</option>
-                            <option value="employee" selected='selected'>Employee</option>
-                        </select>
+
+                        <input type="text" name="name" value="{{ $user->name }}" class="form-control mb-3" placeholder="Name">
+                        <input type="email" name="email" value="{{ $user->email }}" class="form-control mb-3" placeholder="Email">
+                        <div class="">
+                            {{-- <img src="{{ $user->getFirstMediaUrl('profile_picture') }}" alt=""> --}}
+                            <img style="width:100px; height:100px;" src="{{ asset('storage') }}/{{ $user->profile_picture }}" alt="">
                         </div>
+                        <input type="file" name="profile_photo" class="form-control mb-3" id="">
                         <input type="password" name="password" class="form-control mb-3" placeholder="Password">
                         <input type="password" name="password_confirmation" class="form-control mb-3"
                             placeholder="Confirm Password">
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </form>
                 </div>
+
 
 
 

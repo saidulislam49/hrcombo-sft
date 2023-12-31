@@ -32,4 +32,21 @@ class Employee extends Model
     public function designation(){
         return $this->belongsTo(Designation::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
+    }
 }

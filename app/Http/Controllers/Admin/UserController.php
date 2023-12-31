@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 // use Illuminate\Contracts\Session\Session;
@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -62,6 +63,12 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+
+        if ($request->is_admin == 'admin') {
+            $user->is_admin = true;
+        } elseif ($request->is_admin == 'employee') {
+            $user->is_admin = false;
+        }
         // $photo = $request->file('profile_photo');
         // if ($photo->isValid()) {
         //     $user->addMedia($photo)->toMediaCollection('profile_picture');
