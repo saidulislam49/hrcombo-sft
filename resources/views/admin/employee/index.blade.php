@@ -22,49 +22,43 @@
                                 <table class="table">
                                     <thead class="table-light">
                                         <tr>
-                                            <th scope="col">ID</th>
                                             <th scope="col">Employee ID</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Email</th>
-                                            <th scope="col">User Role</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>EMP-1</td>
-                                            <td>Jammie Lebsack</td>
-                                            <td>jammie@gmail.com</td>
-                                            <td>
-                                                <select class="form-select">
-                                                    <option selected>Admin</option>
-                                                    <option value="1">Employee</option>
-                                                    <option value="2">Manager</option>
-                                                </select>
-                                            </td>
-                                            <td>Active</td>
-                                            <td>
-                                                <!-- Example single danger button -->
-                                                <div class="btn-group action_dots">
-                                                    <button type="button" class="btn btn-secondary dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <button class="dropdown-item" type="button"><i
-                                                                class="bx bx-show"></i> View</button>
-                                                        <button class="dropdown-item" type="button"><i
-                                                                class="bx bx-edit"></i> Edit</button>
-                                                        <button class="dropdown-item" type="button"><i
-                                                                class="bx bx-trash-alt"></i> Delete</button>
+                                        @foreach ($employees as $item)
+                                            <tr>
+                                                <td>EMP-{{ $item->id }}</td>
+                                                <td>{{ $item->user->name ?? '' }}</td>
+                                                <td>{{ $item->user->email ?? '' }}</td>
+
+                                                <td>{{ $item->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                                <td>
+                                                    <!-- Example single danger button -->
+                                                    <div class="btn-group action_dots">
+                                                        <button type="button" class="btn btn-secondary dropdown-toggle"
+                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <button class="dropdown-item" type="button"><i
+                                                                    class="bx bx-show"></i> <a href="{{ route('admin.employees.show', $item->id) }}">View</a></button>
+                                                            <button class="dropdown-item" type="button"><i
+                                                                    class="bx bx-edit"></i> Edit</button>
+                                                            <button class="dropdown-item" type="button"><i
+                                                                    class="bx bx-trash-alt"></i> Delete</button>
+                                                        </div>
                                                     </div>
-                                                </div>
 
 
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

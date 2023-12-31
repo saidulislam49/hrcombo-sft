@@ -32,9 +32,29 @@ class AuthServiceProvider extends ServiceProvider
         //
         Gate::define('manage_all', function (User $user) {
             // return 0 == count(Employee::where('user_id', $user->id)->get());
+            // if ($user->is_admin) {
+            //     return true;
+            // } else {
+            //     if (1 >= count(Employee::where('user_id', $user->id)->get())) {
+            //         abort(redirect()->route('employee.dashboard'));
+            //     }
+            // }
+
             if ($user->is_admin) {
                 return true;
+            } elseif (Employee::where('user_id', $user->id)->exists()) {
+
+                if (1 >= count(Employee::where('user_id', $user->id)->get())
+                ) {
+                    abort(redirect()->route('employee.dashboard'));
+                } else {
+                    abort(redirect(route('admin.dashboard')));
+                }
+            } else {
+                return abort(redirect()->route('home_frontend'));
             }
         });
+
+
     }
 }
