@@ -22,9 +22,13 @@ class LeaveController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function leave_type()
+    {
+        return view('admin.leaves.leaves-type');
+    }
     public function create()
     {
-        //
+        return view('admin.leaves.leaves-create');
     }
 
     /**
@@ -46,7 +50,11 @@ class LeaveController extends Controller
      */
     public function show($id)
     {
-        //
+
+    }
+    public function view_leave()
+    {
+        return view('admin.leaves.leaves-show');
     }
 
     /**

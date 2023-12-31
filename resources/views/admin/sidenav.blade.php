@@ -80,8 +80,8 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="mx-sidenav__menu-item {{ url()->current() == route('admin.leaves') ? 'active-page' :'' }}">
-                                    <a href="{{ route('admin.leaves') }}" class="mx-sidenav__menu-link">
+                                <li class="mx-sidenav__menu-item mx-sidenav__has-sub {{ url()->current() == route('admin.leaves') ? 'active-page' :'' }}">
+                                    <a href="#" class="mx-sidenav__menu-link">
                                         <span class="mx-sidenav__menu-icon t-mr-15">
                                             <i class='bx bx-log-in' ></i>
                                         </span>
@@ -89,6 +89,28 @@
                                             Leaves
                                         </span>
                                     </a>
+                                    <ul class="t-list mx-sidenav__sub mx-sidenav__sub--hide">
+                                        <li class="mx-sidenav__sub-item">
+                                            <a href="{{ route('admin.leaves') }}" class="mx-sidenav__sub-link ">
+                                                <span class="mx-sidenav__sub-icon t-mr-15">
+                                                    <i class='bx bxs-user-detail'></i>
+                                                </span>
+                                                <span class="mx-sidenav__sub-text text-capitalize">
+                                                    Leaves
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="mx-sidenav__sub-item">
+                                            <a href="{{ route('admin.leaves.type') }}" class="mx-sidenav__sub-link ">
+                                                <span class="mx-sidenav__sub-icon t-mr-15">
+                                                    <i class='bx bxs-user-plus'></i>
+                                                </span>
+                                                <span class="mx-sidenav__sub-text text-capitalize">
+                                                    Leave Type
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                                 <li class="mx-sidenav__menu-item">
                                     <a href="{{ route('admin.myprofile') }}" class="mx-sidenav__menu-link">
