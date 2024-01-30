@@ -56,6 +56,10 @@ class LeaveController extends Controller
     {
         return view('admin.leaves.leaves-show');
     }
+    public function edit_leave()
+    {
+        return view('admin.leaves.leaves-edit');
+    }
 
     /**
      * Show the form for editing the specified resource.

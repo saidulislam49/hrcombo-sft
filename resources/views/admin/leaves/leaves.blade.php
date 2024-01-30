@@ -12,8 +12,15 @@
                     <div class="cards t-bg-white t-shadow h-100">
                         <div class="cards__header t-pt-20 t-pb-20 px-3 px-md-4 border-bottom">
                             <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <h6 class="mt-0 mb-0 text-capitalize">Leaves</h6>
+                                <div class="col-md-6 text-end">
+                                    <form action="">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="name" placeholder="Username"
+                                                aria-label="Username" aria-describedby="basic-addon1">
+                                            <button class="input-group-text" id="basic-addon1"><i
+                                                    class="bx bx-search"></i></button>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="col-md-6 text-end">
                                     <a href="{{ route('admin.leaves.create') }}" class="btn btn-primary"><i
@@ -89,8 +96,11 @@
                                                             aria-labelledby="dropdownMenuLink-41" tabindex="0"
                                                             x-placement="bottom-end"
                                                             style="position: absolute; transform: translate3d(-137px, 26px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                            <a href="{{ route('admin.leaves.view') }}" class="dropdown-item">View</a><a
-                                                                data-leave-id="12" data-unique-id="" data-duration="single"
+                                                            <a href="{{ route('admin.leaves.view') }}"
+                                                                class="dropdown-item">View</a>
+                                                            <a href="{{ route('admin.leaves.edit') }}"
+                                                                class="dropdown-item">Edit</a>
+                                                            <a data-leave-id="12" data-unique-id="" data-duration="single"
                                                                 class="dropdown-item delete-table-row" href="javascript:;">
                                                                 Delete
                                                             </a>
