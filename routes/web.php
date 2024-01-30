@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'can:manage_all']], 
     Route::get('leaves', [Admin\LeaveController::class, 'index'])->name('admin.leaves');
     Route::get('leaves/create', [Admin\LeaveController::class, 'create'])->name('admin.leaves.create');
     Route::get('leaves/show', [Admin\LeaveController::class, 'view_leave'])->name('admin.leaves.view');
+    Route::get('leaves/edit', [Admin\LeaveController::class, 'edit_leave'])->name('admin.leaves.edit');
     Route::get('leaves/type', [Admin\LeaveController::class, 'leave_type'])->name('admin.leaves.type');
     Route::get('employees/{id}', [Admin\EmployeeController::class, 'show'])->name('admin.employees.show');
 
